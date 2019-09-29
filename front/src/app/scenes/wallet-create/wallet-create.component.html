@@ -1,0 +1,68 @@
+<div class="container">
+  <div class="card">
+    <div class="card-body">
+      <div class="card-title"><img src="../../../assets/icons/user.svg"> Create Account</div>
+      <ng-container *ngIf="account; else error">
+        <div class="callout callout-danger my-4">
+          <p>NOTE: Once you leave this page, you cannot recover the address or private key.</p>
+          <p>Please copy this somewhere safe!</p>
+        </div>
+        <div class="row">
+          <div class="col-md-9">
+            <div class="form-group">
+              <label for="private-key">Private key</label>
+              <div class="input-group">
+                <input type="password" class="form-control" id="private-key" [value]="account.privateKey" readonly>
+                <div class="input-group-append">
+                  <button
+                      class="btn"
+                      type="button"
+                      ngxClipboard
+                      *ngxClipboardIfSupported
+                      (cbOnSuccess)="onCopy()"
+                      [cbContent]="account.privateKey"
+                      title="Copy to clipboard"
+                  >
+                    <img src="../../../assets/icons/copy.svg" alt="Copy">
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div class="form-group input-group">
+              <label for="address">Address</label>
+              <div class="input-group">
+                <input type="text" class="form-control" id="address" [value]="account.address" readonly>
+                <div class="input-group-append">
+                  <button
+                      class="btn"
+                      type="button"
+                      ngxClipboard
+                      *ngxClipboardIfSupported
+                      (cbOnSuccess)="onCopy()"
+                      [cbContent]="account.address"
+                      title="Copy to clipboard"
+                  >
+                    <img src="../../../assets/icons/copy.svg" alt="Copy">
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3 text-right">
+            <a href="{{apiUrl}}/address/{{account.address}}/qr" target="_blank">
+              <img class="img-thumbnail" height="150" width="150" src="{{apiUrl}}/address/{{account.address}}/qr"
+                   alt="{{account.address}}"/>
+            </a>
+          </div>
+        </div>
+        <button type="button" class="btn btn-outline-primary mr-1">Back</button>
+        <button type="button" class="btn btn-primary" (click)="useWallet()">Use wallet</button>
+      </ng-container>
+      <ng-template #error>
+        <div class="callout callout-danger mb-4">
+          <h4>An error occurred while processing request. Please try again later.</h4>
+        </div>
+      </ng-template>
+    </div>
+  </div>
+</div>

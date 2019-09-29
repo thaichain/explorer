@@ -1,0 +1,19 @@
+.app-container {
+  min-height: calc(100vh - 56px);
+
+  .loader {
+    display: none;
+    padding-top: 30vh;
+    transition: opacity .8s ease-out;
+    text-align: center;
+  }
+
+  &--loading {
+    .loader {
+      display: block;
+    }
+    .content {
+      display: none;
+    }
+  }
+}

@@ -1,0 +1,152 @@
+<div class="container">
+  <ng-container *ngIf="addr; else addressNotFound">
+    <div class="card">
+      <div class="card-body">
+        <div class="card-title"><img src="../../../assets/icons/hash.svg"> Address</div>
+        <div class="row">
+          <div class="col-lg-10 col-md-9">
+            <dl>
+              <dt>Address hash:</dt>
+              <dd>
+                {{addr.address}}
+                <ng-container *ngIf="addr.signerDetails">
+                  (<a [href]="addr.signerDetails.url" target="_blank">{{addr.signerDetails.name}}</a>)
+                </ng-container>
+              </dd>
+              <dt>Balance:</dt>
+              <dd>{{addr.balance_wei | weiToGO | bigNumber}}</dd>
+              <ng-container *ngIf="addr.contract">
+                <ng-container *ngIf="addr.token_name">
+                  <dt>Token name:</dt>
+                  <dd>{{addr.token_name}}</dd>
+                </ng-container>
+                <ng-container *ngIf="addr.token_symbol">
+                  <dt>Token symbol:</dt>
+                  <dd>{{addr.token_symbol}}</dd>
+                </ng-container>
+                <ng-container *ngIf="addr.total_supply">
+                  <dt>Total supply:</dt>
+                  <dd>{{addr.total_supply | weiToGO: false : true : addr.decimals ? addr.decimals : 0 | bigNumber}}</dd>
+                </ng-container>
+                <ng-container *ngIf="addr.decimals">
+                  <dt>Decimals:</dt>
+                  <dd>{{addr.decimals}}</dd>
+                </ng-container>
+                <dt>Total internal transactions:</dt>
+                <dd>{{addr.number_of_internal_transactions || 0}}</dd>
+                <dt>Total holders:</dt>
+                <dd>{{addr.number_of_token_holders || 0}}</dd>
+              </ng-container>
+              <dt>Total transactions:</dt>
+              <dd>{{addr.number_of_transactions || 0}}</dd>
+              <ng-container *ngIf="addr.erc_types && !!addr.erc_types.length">
+                <dt>Token type:</dt>
+                <dd><span class="badge badge-primary mr-1"
+                          *ngFor="let type of addr.erc_types">{{tokenTypes[type]}}</span></dd>
+              </ng-container>
+              <dt>Updated at:</dt>
+              <dd>{{addr.updated_at | date: 'yyyy/MM/dd HH:mm:ss'}}</dd>
+            </dl>
+          </div>
+          <div class="col-lg-2 col-md-3">
+            <a href="{{apiUrl}}/address/{{addr.address}}/qr" target="_blank">
+              <img class="img-thumbnail" src="{{apiUrl}}/address/{{addr.address}}/qr" alt="{{addr.address}}"/>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="card-footer"
+           *ngIf="addr.contract && addr.ercObj && (addr.ercObj['Go721Metadata'] || addr.ercObj['Go721Receiver'])">
+        <form class="mt-3" (submit)="searchToken()">
+          <div class="form-group">
+            <!--<label for="asset">Asset:</label>-->
+            <div class="input-group">
+              <input
+                  type="text"
+                  class="form-control"
+                  id="asset"
+                  placeholder="Enter token ID"
+                  name="token"
+                  [(ngModel)]="tokenId"
+              >
+              <div class="input-group-append">
+                <button
+                    type="submit"
+                    class="btn btn btn-outline-primary">
+                  Search
+                </button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class="card mt-4 mb-5">
+      <div class="card-body">
+        <app-tabs name="addr_tab">
+          <tab
+              name="transactions"
+              title="Transactions"
+              description="Transactions to and from this account."
+          >
+            <tab-content>
+              <app-addr-transactions [addr]="addr"></app-addr-transactions>
+            </tab-content>
+          </tab>
+          <tab
+              *ngIf="addr.contract"
+              name="internal_transactions"
+              [title]="(addr.token_symbol || 'Internal')  + ' Transfers'"
+              description="Internal {{addr.token_symbol || ''}} token transfers."
+          >
+            <tab-content>
+              <app-addr-internal-txs [addr]="addr"></app-addr-internal-txs>
+            </tab-content>
+          </tab>
+          <tab
+              *ngIf="addr.contract"
+              name="holders"
+              [title]="(addr.token_symbol ? addr.token_symbol + ' ' : '') + 'Holders'"
+              description="Balances of accounts holding {{addr.token_symbol || ''}} tokens."
+          >
+            <tab-content>
+              <app-token-holders [addr]="addr"></app-token-holders>
+            </tab-content>
+          </tab>
+          <tab
+              name="token_transactions"
+              title="Token Transfers"
+              description="Token transfers to and from this account."
+          >
+            <tab-content>
+              <app-token-txs [addr]="addr"></app-token-txs>
+            </tab-content>
+          </tab>
+          <tab
+              *ngIf="!addr.contract"
+              name="owned_tokens"
+              title="Tokens Held"
+              description="Balance of tokens held by this account."
+          >
+            <tab-content>
+              <app-owned-tokens [addrHash]="addrHash" [showPagination]="false"></app-owned-tokens>
+            </tab-content>
+          </tab>
+          <tab *ngIf="addr.contract" name="interact" title="Interact">
+            <tab-content>
+              <app-interactor [contractData]="[addr, contract]"></app-interactor>
+            </tab-content>
+          </tab>
+          <tab *ngIf="addr.contract" name="contract_source" title="Contract Source">
+            <tab-content>
+              <app-contract-source [addr]="addr"></app-contract-source>
+            </tab-content>
+          </tab>
+        </app-tabs>
+      </div>
+    </div>
+  </ng-container>
+  <ng-template #addressNotFound>
+    <app-info text="Address not found"></app-info>
+  </ng-template>
+</div>

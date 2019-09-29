@@ -1,0 +1,21 @@
+<form class="input-group" (submit)="search()">
+  <input
+      name="search"
+      type="text"
+      class="form-control"
+      autocomplete="off"
+      placeholder="Search by transaction, address or block"
+      aria-label="Search by transaction, address or block"
+      aria-describedby="search"
+      [(ngModel)]="value"
+  >
+  <div class="input-group-append">
+    <button
+        class="btn btn-primary"
+        type="submit"
+        id="search"
+    >
+      <img src="../../../assets/icons/search.svg" alt="Search">
+    </button>
+  </div>
+</form>

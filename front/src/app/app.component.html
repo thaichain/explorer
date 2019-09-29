@@ -1,0 +1,11 @@
+<ng-progress></ng-progress>
+<app-toastr></app-toastr>
+<app-header></app-header>
+<div class="app-container py-4" [ngClass]="{'app-container--loading': isPageLoading}">
+  <div class="loader">
+    <img src="../assets/icons/loader.svg" alt="Loading">
+  </div>
+  <div class="content">
+    <router-outlet></router-outlet>
+  </div>
+</div>
