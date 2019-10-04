@@ -7,7 +7,7 @@ export const THEME_SETTINGS = {
 
 export const LOGO_NAMES = {
   [ThemeColor.LIGHT]: 'logo_fullcolor.svg',
-  [ThemeColor.DARK]: 'logo_allwhite.svg',
+  [ThemeColor.DARK]: 'logo_fullcolor.svg',
 };
 
 export const ROUTES = {
@@ -37,11 +37,10 @@ export const MENU_ITEMS: MenuItem[] = [
     title: 'Rich List',
     link: ROUTES.RICHLIST,
   },
- */
   {
     title: 'Verify Contract',
     link: '/verify',
-  },
+  },*/
   {
     title: 'Contracts',
     link: ROUTES.CONTRACTS,
@@ -54,19 +53,18 @@ export const MENU_ITEMS: MenuItem[] = [
     title: 'Signers',
     link: ROUTES.SIGNERS,
   },
- /* 
-  {
+  /*{
     title: 'Network Stats',
-    link: 'https://stats.tch.in.th/',
+    link: 'https://stats.gochain.io',
     external: true
-  },
-  {
+  },*/
+  /*{
     title: 'Settings',
     link: '/settings',
   },*/
 ];
 
-export const DEFAULT_GAS_LIMIT = 136500000;
+export const DEFAULT_GAS_LIMIT = 21000;
 
 export const TOKEN_TYPES = {
   Go20: 'ERC20',

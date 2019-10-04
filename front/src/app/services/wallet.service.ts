@@ -74,7 +74,7 @@ export class WalletService {
               return;
             }
             if (web3NetID != metamask3NetID) {
-              this._toastrService.danger("Metamask is enabled but networks are different "+web3NetID);
+              this._toastrService.danger("Metamask is enabled but networks are different");
               return;
             }
             this._web3 = metaMaskProvider;
