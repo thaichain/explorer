@@ -164,8 +164,8 @@ func (self *Backend) GetTransactionList(address string, skip, limit int, fromTim
 func (self *Backend) GetTokenHoldersList(contractAddress string, skip, limit int) []*models.TokenHolder {
 	return self.mongo.getTokenHoldersList(common.HexToAddress(contractAddress).Hex(), skip, limit)
 }
-func (self *Backend) GetOwnedTokensList(ownerAddress string, skip, limit int) []*models.TokenHolder {
-	return self.mongo.getOwnedTokensList(common.HexToAddress(ownerAddress).Hex(), skip, limit)
+func (self *Backend) GetOwnedTokensList(ownerAddress string, skip, limit int, onlycontractAddress string) []*models.TokenHolder {
+	return self.mongo.getOwnedTokensList(common.HexToAddress(ownerAddress).Hex(), skip, limit, onlycontractAddress)
 }
 func (self *Backend) GetInternalTransactionsList(contractAddress string, tokenTransactions bool, skip, limit int, onlycontractAddress string) []*models.InternalTransaction {
 	return self.mongo.getInternalTransactionsList(common.HexToAddress(contractAddress).Hex(), tokenTransactions, skip, limit, onlycontractAddress)

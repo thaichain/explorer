@@ -579,9 +579,18 @@ func (self *MongoBackend) getTokenHoldersList(contractAddress string, skip, limi
 	}
 	return tokenHoldersList
 }
-func (self *MongoBackend) getOwnedTokensList(ownerAddress string, skip, limit int) []*models.TokenHolder {
+func (self *MongoBackend) getOwnedTokensList(ownerAddress string, skip, limit int, onlycontractAddress string) []*models.TokenHolder {
 	var tokenHoldersList []*models.TokenHolder
-	err := self.mongo.C("TokensHolders").Find(bson.M{"token_holder_address": ownerAddress}).Sort("-balance_int").Skip(skip).Limit(limit).All(&tokenHoldersList)
+	var query bson.M
+	if len(onlycontractAddress) > 0  {
+		    query = bson.M{
+				"contract_address": onlycontractAddress,
+				"token_holder_address": ownerAddress,
+		    };
+	}else{
+		    query = bson.M{"token_holder_address": ownerAddress};	    
+	}
+	err := self.mongo.C("TokensHolders").Find(query).Sort("-balance_int").Skip(skip).Limit(limit).All(&tokenHoldersList)
 	if err != nil {
 		self.Lgr.Error("Failed to get owned tokens list", zap.String("address", ownerAddress), zap.Error(err))
 	}

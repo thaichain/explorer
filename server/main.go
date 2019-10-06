@@ -422,11 +422,12 @@ func getTokenHolders(w http.ResponseWriter, r *http.Request) {
 
 func getOwnedTokens(w http.ResponseWriter, r *http.Request) {
 	contractAddress := chi.URLParam(r, "address")
+	onlycontractAddress := r.URL.Query().Get("onlycontractaddress")
 	skip, limit := parseSkipLimit(r)
 	tokens := &models.OwnedTokenList{
 		OwnedTokens: []*models.TokenHolder{},
 	}
-	tokens.OwnedTokens = backendInstance.GetOwnedTokensList(contractAddress, skip, limit)
+	tokens.OwnedTokens = backendInstance.GetOwnedTokensList(contractAddress, skip, limit, onlycontractAddress)
 	writeJSON(w, http.StatusOK, tokens)
 }
 
