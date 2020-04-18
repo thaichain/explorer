@@ -75,7 +75,7 @@ func main() {
 	app.Flags = []cli.Flag{
 		cli.StringFlag{
 			Name:        "rpc-url, u",
-			Value:       "https://rpc.gochain.io",
+			Value:       "https://rpc.tch.in.th/",
 			Usage:       "rpc api url",
 			EnvVar:      "RPC_URL",
 			Destination: &rpcUrl,
@@ -335,11 +335,16 @@ func getRichlist(w http.ResponseWriter, r *http.Request) {
 		errorResponse(w, http.StatusInternalServerError, err)
 		return
 	}
+//	totalSupply := new(big.Int)
+//	circulatingSupply := new(big.Int)
+//	totalSupply.SetString("1000000000000000000000000000", 0)
+//	circulatingSupply.SetString("1000000000000000000000000000", 0)
 	bl := &models.Richlist{
 		Rankings:          []*models.Address{},
 		TotalSupply:       new(big.Rat).SetFrac(totalSupply, wei).FloatString(18),
 		CirculatingSupply: new(big.Rat).SetFrac(circulatingSupply, wei).FloatString(18),
 	}
+//	err := errors.New("math: square root of negative number")
 	bl.Rankings, err = backendInstance.GetRichlist(filter)
 	if err != nil {
 		logger.Error("Failed to get rich list", zap.Int("skip", filter.Skip), zap.Int("limit", filter.Limit), zap.Error(err))

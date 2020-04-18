@@ -52,7 +52,7 @@ func main() {
 	app.Flags = []cli.Flag{
 		cli.StringFlag{
 			Name:        "rpc-url, u",
-			Value:       "https://rpc.gochain.io",
+			Value:       "http://163.172.15.136:8545",
 			Usage:       "rpc api url",
 			Destination: &rpcUrl,
 		},

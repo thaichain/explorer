@@ -14,7 +14,7 @@ import (
 	"github.com/gochain-io/explorer/server/utils"
 
 	"github.com/gochain/gochain/v3/common"
-	"github.com/gochain/gochain/v3/common/hexutil"
+//	"github.com/gochain/gochain/v3/common/hexutil"
 	"github.com/gochain/gochain/v3/consensus/clique"
 	"github.com/gochain/gochain/v3/core/types"
 	"github.com/gochain/gochain/v3/goclient"
@@ -87,39 +87,18 @@ func (self *Backend) CodeAt(ctx context.Context, address string) ([]byte, error)
 }
 
 func (self *Backend) TotalSupply(ctx context.Context) (*big.Int, error) {
-	var value *big.Int
-	err := utils.Retry(ctx, 5, 2*time.Second, func() (err error) {
-		var result hexutil.Big
-		err = self.goRPC.CallContext(ctx, &result, "eth_totalSupply", "latest")
-		if err != nil {
-			return err
-		}
-		value = result.ToInt()
-		return nil
-	})
-	return value, err
+        var value, ok = new(big.Int).SetString("3100000000000000000000000000", 0)
+        if ok {
+	    return value, nil
+	}
+	return value, nil
 }
 func (self *Backend) CirculatingSupply(ctx context.Context) (*big.Int, error) {
-	var value *big.Int
-	err := utils.Retry(ctx, 5, 2*time.Second, func() (err error) {
-		var result hexutil.Big
-		err = self.goRPC.CallContext(ctx, &result, "eth_totalSupply", "latest")
-		if err != nil {
-			return err
-		}
-		total := result.ToInt()
-		locked := new(big.Int)
-		for _, l := range self.lockedAccounts {
-			bal, err := self.Balance(ctx, common.HexToAddress(l))
-			if err != nil {
-				return err
-			}
-			locked = locked.Add(locked, bal)
-		}
-		value = new(big.Int).Sub(total, locked)
-		return nil
-	})
-	return value, err
+        var value, ok  = new(big.Int).SetString("3100000000000000000000000000", 0)
+        if ok {
+	    return value, nil
+	}
+	return value, nil
 }
 func (self *Backend) GetStats() (*models.Stats, error) {
 	return self.mongo.getStats()
