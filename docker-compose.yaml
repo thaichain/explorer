@@ -2,26 +2,27 @@ version: "3"
 services:
   web:
     container_name: web
-    image: explorer
+    image: thaichain/explorer
     restart: "always"
-    command: "server -d /explorer/ -m mongodb:27017"
+    command: "server -d /explorer/ -m mongodb:27017 -signers /signers/signers.json  -u https://rpc.tch.in.th"
     links:
         - "mongodb"
     volumes:
+        - ./signers:/signers
         - "/var/run/docker.sock:/var/run/docker.sock"
     ports:
         - "8080:8080"
     depends_on:
-      - mongodb    
+      - mongodb
   grabber:
     container_name: grabber
-    image: explorer
+    image: thaichain/explorer
     restart: "always"
-    command: "grabber -m mongodb:27017 -u http://163.172.15.136:8545/"
+    command: "grabber -m mongodb:27017 -u http://27.254.156.3:8545"
     links:
         - "mongodb"
     depends_on:
-      - mongodb    
+      - mongodb
   mongodb:
         image: mongo
         container_name: "mongodb"
@@ -31,3 +32,4 @@ services:
         volumes:
           - ./data/db:/data/db
         command: mongod --logpath=/dev/null
+
