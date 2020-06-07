@@ -4,7 +4,7 @@ services:
     container_name: web
     image: thaichain/explorer
     restart: "always"
-    command: "server -d /explorer/ -m mongodb:27017 -signers /signers/signers.json  -u https://rpc.tch.in.th"
+    command: "server -d /explorer/ -m mongodb:27017 -signers /signers/signers.json  -u https://rpc.dome.cloud"
     links:
         - "mongodb"
     volumes:
@@ -18,7 +18,7 @@ services:
     container_name: grabber
     image: thaichain/explorer
     restart: "always"
-    command: "grabber -m mongodb:27017 -u http://27.254.156.3:8545"
+    command: "grabber -m mongodb:27017 -u http://51.15.80.113:8545"
     links:
         - "mongodb"
     depends_on:
