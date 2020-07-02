@@ -239,7 +239,7 @@ func main() {
 				r.Get("/contracts", getContractsList)
 			})
 		})
-		server := &http.Server{Addr: ":8080", Handler: r}
+		server := &http.Server{Addr: ":8088", Handler: r}
 		go func() {
 			select {
 			case <-ctx.Done():
@@ -499,6 +499,7 @@ func getOwnedTokens(w http.ResponseWriter, r *http.Request) {
 	if !parseGetParam(r, w, filter) {
 		return
 	}
+	
 	tokens := &models.OwnedTokenList{}
 	tokens.OwnedTokens, err = backendInstance.GetOwnedTokensList(contractAddress, filter)
 	if err != nil {

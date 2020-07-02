@@ -652,8 +652,12 @@ func (self *MongoBackend) getTokenHoldersList(contractAddress string, filter *mo
 }
 func (self *MongoBackend) getOwnedTokensList(ownerAddress string, filter *models.PaginationFilter) ([]*models.TokenHolder, error) {
 	var tokenHoldersList []*models.TokenHolder
+	query := bson.M{"token_holder_address": ownerAddress}
+	if filter.ContractAddress != "" {
+	    query = bson.M{"token_holder_address": ownerAddress, "contract_address": filter.ContractAddress}
+        }
 	err := self.mongo.C("TokensHolders").
-		Find(bson.M{"token_holder_address": ownerAddress}).
+		Find(query).
 		Sort("-balance_int").
 		Skip(filter.Skip).
 		Limit(filter.Limit).
