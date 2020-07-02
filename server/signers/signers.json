@@ -1,0 +1,38 @@
+{
+    "0x66649703F4238F1e3bDB761caa9dBe02E6A43E5c":{
+       "name":"DomeCloud Co.,Ltd.",
+       "url":"https://dome.cloud/",
+       "region":"Thailand"
+    },
+    "0x79663F7666b895345909658eaC571E7857fD4b26":{
+             "name":"Kulap",
+       "url":"https://www.kulap.io/",
+       "region":"Thailand"
+    },
+    "0x56e9Aa4095437403da83d6d7572fbe14A0e65B4F":{
+             "name":"Thaichain",
+       "url":"https://thaichain.io/",
+       "region":"Thailand"
+    },
+    "0x1BcED30Dc407EF1Af00575aDB5265614cC3E64B5":{
+             "name":"Khonkaen University",
+       "url":"https://www.kku.ac.th/",
+       "region":"Thailand"
+    },
+    "0x5c1927afDb2842d793Df17ac220312a7EbA56eAc":{
+             "name":"TBWG",
+       "url":"http://www.tbwg.io/",
+       "region":"Thailand"
+    },
+    "0xf29068D05346A881B1e81102fa0E75650488F1F9":{
+             "name":"i-bitz",
+       "url":"https://www.i-bitz.co.th/",
+       "region":"Thailand"
+    },
+    "0xb82fF5c8C8b5D1E72B9C1e6875Bf2fE8293202a0":{
+             "name":"Thaichain Node 1",
+       "url":"https://thaichain.io/",
+       "region":"Thailand"
+    }
+
+}
